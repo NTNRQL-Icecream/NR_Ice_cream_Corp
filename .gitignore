@@ -1,0 +1,13 @@
+node_modules/
+
+# folder for receipts
+receipts/
+
+# Folder for logs
+order_logs/
+
+# packages
+package.json
+
+# packages-lock.json
+package-lock.json
