@@ -21,7 +21,11 @@ Edit later
 node index.js
 
 ## Contribution Guidelines
-Code contributors: Nathan and Raquel. NodeJS packages used: \n- Inquirer\n- nanoid\n- csv-parser\n- csv-writer
+Code contributors: Nathan and Raquel. NodeJS packages used: 
+- Inquirer
+- nanoid
+- csv-parser
+- csv-writer
 
 ## Test Instructions
 edit later
