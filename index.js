@@ -1,4 +1,5 @@
 const inquirer = require("inquirer");
+const adminLogin = require("./admin-login").getAdminInfo;
 
 const init = () => {
     inquirer.prompt([
@@ -17,7 +18,7 @@ const callFunction = (answer) => {
     if (answer.consumerOrAdmin === "Consumer") {
         console.log("you are a consumer");
     } else {
-        console.log("admin")
+        adminLogin();
     }
 }
 
