@@ -6,8 +6,4 @@ receipts/
 # Folder for logs
 order_logs/
 
-# packages
-package.json
-
-# packages-lock.json
-package-lock.json
+.env
