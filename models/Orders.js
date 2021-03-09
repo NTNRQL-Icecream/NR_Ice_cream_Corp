@@ -14,7 +14,7 @@ Orders.init(
             type: Datatypes.DECIMAL(10, 2),
             allowNull: false
         },
-        customer: {
+        payment_method: {
             type: Datatypes.STRING,
             allowNull: false
         }
