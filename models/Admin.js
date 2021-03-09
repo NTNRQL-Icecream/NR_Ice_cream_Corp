@@ -6,7 +6,7 @@ class Admin extends Model { };
 Admin.init(
     {
         admin_id: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING,
             primaryKey: true
         },
         username: {
