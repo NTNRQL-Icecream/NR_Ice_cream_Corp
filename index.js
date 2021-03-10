@@ -1,5 +1,5 @@
 const inquirer = require("inquirer");
-const adminLogin = require("./admin-login").getAdminInfo;
+const adminLogin = require("./admin-login").login;
 
 const init = () => {
     inquirer.prompt([
