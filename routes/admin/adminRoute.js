@@ -13,7 +13,7 @@ router.get("/login", async (req, res) => {
 
         // Check if not found
         if (!adminData) {
-            res.status(404).json({
+            res.status(401).json({
                 message: "Incorrect username or password."
             });
             return
@@ -22,11 +22,11 @@ router.get("/login", async (req, res) => {
         const validPass = await adminData.passwordCheck(pass);
         if (!validPass) {
             res
-                .status(404)
+                .status(401)
                 .json({ message: "incorrect username or password." });
             return;
         }
-        res.json({ admin: adminData, message: "Successful login" });
+        res.status(200).json({ admin: adminData, message: "Successful login" });
     } catch (e) {
         res.status(500).json(e);
     }
