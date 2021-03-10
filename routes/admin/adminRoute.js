@@ -43,5 +43,43 @@ router.post("/", async (req, res) => {
         res.status(500).json(e);
     }
 });
+// Change password
+router.put("/changePassword/:id", async (req, res) => {
+    try {
+        const { oldPassword, newPassword } = req.body;
+        const adminInfo = await Admin.findOne({
+            where: {
+                admin_id: req.params.id
+            }
+        });
+
+        // Check if not found
+        if (!adminInfo) {
+            res.status(404).json({
+                message: "User not found"
+            });
+            return
+        }
+        // Check if valid password
+        const validPass = await adminInfo.passwordCheck(oldPassword);
+        if (!validPass) {
+            res
+                .status(401)
+                .json({ message: "Incorrect password." });
+            return;
+        }
+
+        // If valid change password;
+        const newAdmin = await Admin.update({ password: newPassword }, {
+            where: {
+                admin_id: req.params.id
+            },
+            individualHooks: true
+        })
+        res.status(200).json(newAdmin);
+    } catch (e) {
+        res.status(500).json(e);
+    }
+});
 
 module.exports = router;
