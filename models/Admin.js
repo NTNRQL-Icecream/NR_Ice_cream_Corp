@@ -1,7 +1,12 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require("../config/connection");
+const bcrypt = require("bcrypt");
 
-class Admin extends Model { };
+class Admin extends Model {
+    passwordCheck(userPassword) {
+        return bcrypt.compareSync(userPassword, this.password);
+    }
+};
 
 Admin.init(
     {
@@ -15,9 +20,22 @@ Admin.init(
         },
         password: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: false,
+            validate: {
+                len: [6]
+            }
         }
     }, {
+    hooks: {
+        beforeCreate: async (adminData) => {
+            adminData.password = await bcrypt.hash(adminData.password, 10);
+            return adminData;
+        },
+        beforeUpdate: async (adminData) => {
+            adminData.password = await bcrypt.hash(adminData.password, 10);
+            return adminData;
+        }
+    },
     sequelize,
     modelName: "Admin",
     timestamps: false,
