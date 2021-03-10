@@ -1,5 +1,6 @@
 const inquirer = require("inquirer");
 const fetch = require("node-fetch");
+const adminMain = require("./admin-main");
 
 let loginStatus = false;
 
@@ -17,7 +18,7 @@ const login = async () => {
     }
     // If successful login
     loginStatus = true;
-    pendTransfer();
+    pendTransfer(resultJSON.admin);
 }
 
 const getUsername = () => {
@@ -41,7 +42,7 @@ const getPassword = () => {
 }
 
 
-const pendTransfer = () => {
+const pendTransfer = (user) => {
     if (loginStatus) {
         let dots = ".."
         // Add some dots after login for fun.
@@ -51,14 +52,15 @@ const pendTransfer = () => {
             if (dots === ".......") {
                 clearInterval(interval);
                 console.log("You've successfully logged in!");
-                transfer();
+                transfer(user);
             }
         }, 500)
     }
 }
 
-const transfer = () => {
+const transfer = (user) => {
     console.log("-------\n");
+    adminMain(user);
 }
 
 
