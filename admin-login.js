@@ -1,29 +1,23 @@
-const csv = require("csv-parser");
 const inquirer = require("inquirer");
-const fs = require("fs");
-
-let results = [];
-let usernameAnswer;
-let passwordAnswer;
+const fetch = require("node-fetch");
 
 let loginStatus = false;
-
-const getAdminInfo = async () => {
-    fs.createReadStream('Admin-login/login.csv')
-        .pipe(csv())
-        .on('data', (data) => results.push(data))
-        .on('end', async () => {
-            //Call register function
-            await login()
-            await compareLoginInfo();
-            await pendTransfer();
-        });
-}
 
 const login = async () => {
     // Get user input for username and password
     usernameAnswer = await getUsername();
     passwordAnswer = await getPassword();
+
+    const results = await fetch(`http://localhost:3000/admin/admin/login?user=${usernameAnswer.username}&pass=${passwordAnswer.password}`)
+    const resultJSON = await results.json();
+    // If status === 401 (bad authentication) or 500 (internal server error) log message and return.
+    if (results.status === 401 || results.status === 500) {
+        console.log(resultJSON.message);
+        return;
+    }
+    // If successful login
+    loginStatus = true;
+    pendTransfer();
 }
 
 const getUsername = () => {
@@ -46,16 +40,6 @@ const getPassword = () => {
     ])
 }
 
-const compareLoginInfo = () => {
-    for (obj of results) {
-        if (obj.Username === usernameAnswer.username && obj.Password === passwordAnswer.password) {
-            uniqueID = obj.UniqueID;
-            loginStatus = true;
-            return;
-        }
-    }
-    console.log("Incorrect username or password");
-}
 
 const pendTransfer = () => {
     if (loginStatus) {
@@ -78,4 +62,4 @@ const transfer = () => {
 }
 
 
-module.exports = { getAdminInfo }
+module.exports = { login }
