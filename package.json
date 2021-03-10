@@ -19,7 +19,6 @@
   "homepage": "https://github.com/NTNRQL-Icecream/NR_Icream_Corp#readme",
   "dependencies": {
     "bcrypt": "^5.0.1",
-    "csv-parser": "^3.0.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "inquirer": "^7.3.3",
